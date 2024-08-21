@@ -10,7 +10,7 @@
         font-family: Arial, sans-serif;
         text-align: center;
         padding: 20px;
-        background-color: #ffffff; /* Background color set to white */
+        background-color: #ffffff;
       }
     </style>
   </head>
@@ -27,7 +27,9 @@
 
         const user = tg.initDataUnsafe.user;
         const query = tg.initDataUnsafe.query; // Get the original query string
-        const startApp = tg.initDataUnsafe.startapp; // Get the startapp parameter
+
+        // Custom 'startapp' parameter handling via tgWebAppStartParam
+        const startApp = tg.initDataUnsafe.tgWebAppStartParam;
 
         // Display user's first and last name
         if (user) {
