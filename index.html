@@ -30,30 +30,30 @@
 
         tg.expand(); // Expand the app to full height
 
-        const user = tg.initDataUnsafe.user;
+        tg.ready().then(() => {
+          const user = tg.initDataUnsafe.user;
 
-        const urlParams = new URLSearchParams(window.location.search); // Get the URL parameters
+          const startParam = tg.initDataUnsafe.startParam; // Get the start parameter
 
-        const referrerUuid = urlParams.get("referrerUuid"); // Extract the referrerUuid from the URL parameters
+          const urlParams = new URLSearchParams(startParam); // Parse the start parameter as URL parameters
 
-        tg.setQueryParams({ referrerUuid }); // Set the referrerUuid as a query parameter
+          const referrerUuid = urlParams.get("referrerUuid"); // Extract the referrerUuid from the start parameter
 
-        if (user) {
+          if (user) {
+            document.getElementById(
+              "userInfo"
+            ).textContent = `Hello, ${user.first_name} ${user.last_name}`;
+          } else {
+            document.getElementById("userInfo").textContent =
+              "User info not available.";
+          }
+
+          // Display the referrerUuid in the new paragraph
+
           document.getElementById(
-            "userInfo"
-          ).textContent = `Hello, ${user.first_name} ${user.last_name}`;
-        } else {
-          document.getElementById("userInfo").textContent =
-            "User info not available.";
-        }
-
-        // Display the referrerUuid in the new paragraph
-
-        document.getElementById(
-          "referrerUuid"
-        ).textContent = `Referrer UUID: ${referrerUuid}`;
-
-        tg.ready();
+            "referrerUuid"
+          ).textContent = `Referrer UUID: ${referrerUuid}`;
+        });
       } else {
         document.getElementById("userInfo").textContent =
           "Telegram Web App SDK not available.";
