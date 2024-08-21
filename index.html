@@ -12,6 +12,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #fff;
             padding: 20px;
         }
         button {
@@ -31,52 +32,28 @@
 <body>
     <h1>Telegram Web App</h1>
     <p id="userInfo">Loading user info...</p>
-    <button id="sendRequestBtn" disabled>Send Request</button>
-
-    <div id="incomingRequests">
-        <h2>Incoming Requests:</h2>
-        <ul id="requestsList"></ul>
-    </div>
+    <p id="referrerUuid"></p>
 
     <script>
-        let requestsList = document.getElementById('requestsList');
+        // Helper function to get URL parameters
+        function getUrlParameter(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
 
         if (window.Telegram.WebApp) {
             const tg = window.Telegram.WebApp;
             tg.expand(); // Expand the app to full height
 
             const user = tg.initDataUnsafe.user;
+            const referrerUuid = getUrlParameter('referrerUuid'); // Get referrerUuid from the URL
+
             if (user) {
                 document.getElementById('userInfo').textContent = `Hello, ${user.first_name} ${user.last_name}`;
-                document.getElementById('sendRequestBtn').disabled = false;
+                document.getElementById('referrerUuid').textContent = `Hello, ${referrerUuid}`;
             } else {
-                document.getElementById('userInfo').textContent = 'User info not available.';
+                document.getElementById('referrerUuid').textContent = 'No UUID';
             }
-
-            document.getElementById('sendRequestBtn').addEventListener('click', function() {
-                const requestData = {
-                    user_id: user.id,
-                    first_name: user.first_name,
-                    last_name: user.last_name
-                };
-
-                fetch('https://your-server-url/handle-telegram-request', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                }).then(response => response.json())
-                .then(data => {
-                    alert('Request sent successfully: ' + JSON.stringify(data));
-                }).catch(error => {
-                    alert('Error sending request: ' + error);
-                });
-            });
-
-            tg.ready();
-        } else {
-            document.getElementById('userInfo').textContent = 'Telegram Web App SDK not available.';
         }
     </script>
 </body>
