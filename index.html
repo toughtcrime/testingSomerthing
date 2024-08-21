@@ -27,17 +27,12 @@
 
       if (window.Telegram.WebApp) {
         const tg = window.Telegram.WebApp;
-
         tg.expand(); // Expand the app to full height
 
         tg.ready().then(() => {
           const user = tg.initDataUnsafe.user;
-
           const startParam = tg.initDataUnsafe.startParam; // Get the start parameter
-
-          const urlParams = new URLSearchParams(startParam); // Parse the start parameter as URL parameters
-
-          const referrerUuid = urlParams.get("referrerUuid"); // Extract the referrerUuid from the start parameter
+          const referrerUuid = startParam.split("/").pop(); // Extract the referrerUuid from the start parameter
 
           if (user) {
             document.getElementById(
@@ -49,7 +44,6 @@
           }
 
           // Display the referrerUuid in the new paragraph
-
           document.getElementById(
             "referrerUuid"
           ).textContent = `Referrer UUID: ${referrerUuid}`;
