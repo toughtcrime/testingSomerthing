@@ -5,17 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Telegram Web App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background-color: #fff;
+        }
+    </style>
   </head>
   <body>
     <h1>Telegram Web App Example</h1>
-    <div id="start-app-value"></div>
+    <div id="content"></div>
 
     <script>
-      const initData = window.Telegram.WebApp.initData;
-      const startAppValue = initData.startApp;
+      Telegram.WebApp.ready();
 
-      console.log(startAppValue); // prints the value of the startApp parameter
-      document.getElementById("start-app-value").innerHTML = startAppValue;
+      // Extract the `referrerUuid` parameter from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const referrerUuid = urlParams.get("referrerUuid");
+
+      if (referrerUuid) {
+        console.log("Referrer UUID:", referrerUuid);
+        // Use the referrerUuid as needed in your app
+        document.getElementById(
+          "content"
+        ).innerText = `Referrer UUID: ${referrerUuid}`;
+      } else {
+        console.log("No Referrer UUID found");
+        document.getElementById("content").innerText =
+          "Referrer UUID not found";
+      }
     </script>
   </body>
 </html>
