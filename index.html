@@ -6,9 +6,9 @@
     <title>Telegram Web App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body {
-            background-color: #fff;
-        }
+      body {
+        background-color: #fff;
+      }
     </style>
   </head>
   <body>
@@ -16,22 +16,35 @@
     <div id="content"></div>
 
     <script>
+      // Initialize the Telegram Web App
       Telegram.WebApp.ready();
 
-      // Extract the `referrerUuid` parameter from the URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const referrerUuid = urlParams.get("referrerUuid");
+      // Extract the `initDataUnsafe` which is an object representation of `initData`
+      const initDataUnsafe = Telegram.WebApp.initDataUnsafe;
 
+      // Try to extract custom parameters from the `initDataUnsafe`
+      const startapp = initDataUnsafe.query_id || null;
+      const referrerUuid = initDataUnsafe.referrerUuid || null;
+
+      // Alternatively, if you encoded these parameters in the URL initially:
+      const urlParams = new URLSearchParams(initDataUnsafe.start_param);
+
+      // Now, you can check if these parameters exist
       if (referrerUuid) {
         console.log("Referrer UUID:", referrerUuid);
-        // Use the referrerUuid as needed in your app
+        // Use the referrerUuid in your app logic
         document.getElementById(
           "content"
         ).innerText = `Referrer UUID: ${referrerUuid}`;
+      } else if (startapp) {
+        console.log("Startapp Parameter:", startapp);
+        document.getElementById(
+          "content"
+        ).innerText = `Startapp Parameter: ${startapp}`;
       } else {
-        console.log("No Referrer UUID found");
+        console.log("No relevant parameters found");
         document.getElementById("content").innerText =
-          "Referrer UUID not found";
+          "No relevant parameters found";
       }
     </script>
   </body>
