@@ -10,7 +10,7 @@
         font-family: Arial, sans-serif;
         text-align: center;
         padding: 20px;
-        background-color: #ffffff; /* Add this line to set the background color to white */
+        background-color: #ffffff; /* Background color set to white */
       }
     </style>
   </head>
@@ -18,21 +18,35 @@
     <h1>Telegram Web App</h1>
     <p id="userInfo"></p>
     <p id="referrerUuid">UUID: empty</p>
+    <p id="startapp">StartApp: empty</p>
 
     <script>
-      // ...
-
       if (window.Telegram.WebApp) {
         const tg = window.Telegram.WebApp;
         tg.expand(); // Expand the app to full height
 
-        const user = tg.initData.user;
+        const user = tg.initDataUnsafe.user;
         const query = tg.initDataUnsafe.query; // Get the original query string
+        const startApp = tg.initDataUnsafe.startapp; // Get the startapp parameter
 
-        // Display the referrerUuid in the new paragraph
+        // Display user's first and last name
+        if (user) {
+          document.getElementById("userInfo").textContent =
+            `User: ${user.first_name} ${user.last_name || ''}`;
+        } else {
+          document.getElementById("userInfo").textContent =
+            "User information not available.";
+        }
+
+        // Display the referrerUuid
         document.getElementById(
           "referrerUuid"
         ).textContent = `Referrer UUID: ${query}`;
+
+        // Display the startapp parameter
+        document.getElementById(
+          "startapp"
+        ).textContent = `StartApp: ${startApp || 'Not provided'}`;
 
         tg.ready();
       } else {
