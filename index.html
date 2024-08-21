@@ -1,58 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Telegram Web App</title>
-
-    <!-- Include the Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding: 20px;
-        background-color: #ffffff; /* Add this line to set the background color to white */
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Telegram Web App</h1>
-    <p id="userInfo">Loading user info...</p>
-    <p id="referrerUuid"></p>
+</head>
+<body>
+    <h1>Telegram Web App Example</h1>
+    <div id="content"></div>
 
     <script>
-      // ...
+        // Initialize the Telegram Web App
+        Telegram.WebApp.ready();
 
-      if (window.Telegram.WebApp) {
-        const tg = window.Telegram.WebApp;
+        // Get the full URL of the page
+        const urlParams = new URLSearchParams(window.location.search);
 
-        tg.expand(); // Expand the app to full height
+        // Extract the 'startapp' parameter from the URL
+        const startappValue = urlParams.get('startapp');
 
-        tg.ready()
-          .then(() => {
-            return tg.getInitData();
-          })
-          .then((initData) => {
-            const startAppData = initData.startAppData; // Get the startAppData
+        // Display the parameter value on the page (for demonstration)
+        document.getElementById('content').innerText = `Startapp Parameter: ${startappValue}`;
 
-            if (startAppData) {
-              document.getElementById(
-                "referrerUuid"
-              ).textContent = `Referrer UUID: ${startAppData}`;
-            } else {
-              document.getElementById("referrerUuid").textContent =
-                "No referrer UUID provided.";
-            }
-          })
-          .catch((error) => {
-            console.error("Error initializing Telegram Web App:", error);
-          });
-      } else {
-        document.getElementById("referrerUuid").textContent =
-          "Telegram Web App SDK not available.";
-      }
+        // You can now use the 'startappValue' in your app logic
+        if (startappValue === 'hello') {
+            // Do something specific if the startapp value is 'hello'
+            console.log("Startapp value is 'hello'");
+        }
     </script>
-  </body>
+</body>
 </html>
