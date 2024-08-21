@@ -19,8 +19,8 @@
   </head>
   <body>
     <h1>Telegram Web App</h1>
-    <p id="userInfo">UUID: empty</p>
-    <p id="referrerUuid"></p>
+    <p id="userInfo"></p>
+    <p id="referrerUuid">UUID: empty</p>
 
     <script>
       // ...
@@ -31,21 +31,11 @@
 
         const user = tg.initDataUnsafe.user;
         const query = tg.initDataUnsafe.query; // Get the original query string
-        const referrerUuid = new URLSearchParams(query).get("referrerUuid"); // Extract the referrerUuid from the query string
-
-        if (user) {
-          document.getElementById(
-            "userInfo"
-          ).textContent = `Hello, ${user.first_name} ${user.last_name}`;
-        } else {
-          document.getElementById("userInfo").textContent =
-            "User info not available.";
-        }
 
         // Display the referrerUuid in the new paragraph
         document.getElementById(
           "referrerUuid"
-        ).textContent = `Referrer UUID: ${referrerUuid}`;
+        ).textContent = `Referrer UUID: ${query}`;
 
         tg.ready();
       } else {
