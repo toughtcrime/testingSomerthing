@@ -1,51 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Telegram Web App</title>
 
     <!-- Include the Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            background-color: #FFFFFF; /* Add this line to set the background color to white */
-        }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+        background-color: #ffffff; /* Add this line to set the background color to white */
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Telegram Web App</h1>
     <p id="userInfo">Loading user info...</p>
     <p id="referrerUuid"></p>
 
     <script>
+      // ...
 
-        if (window.Telegram.WebApp) {
-    
-            const tg = window.Telegram.WebApp;
-    
-            tg.expand(); // Expand the app to full height
-    
-            const user = tg.initDataUnsafe.user;
+      if (window.Telegram.WebApp) {
+        const tg = window.Telegram.WebApp;
 
-            const query = tg.initDataUnsafe.query; // Get the original query string
-            const referrerUuid = new URLSearchParams(query).get('referrerUuid'); // Extract the referrerUuid from the query string
-            
-            if (user) {
-                document.getElementById('userInfo').textContent = `Hello, ${user.first_name} ${user.last_name}`;
-            } else {
-                document.getElementById('userInfo').textContent = 'User info not available.';
-            }
-            // Display the referrerUuid in the new paragraph
-            document.getElementById('referrerUuid').textContent = `Referrer UUID: ${referrerUuid}`;
-            tg.ready();
+        tg.expand(); // Expand the app to full height
+
+        const user = tg.initDataUnsafe.user;
+
+        const startParam = tg.initDataUnsafe.startParam; // Get the original start parameter
+
+        const referrerUuid = startParam; // The startParam should contain the referrerUuid
+
+        if (user) {
+          document.getElementById(
+            "userInfo"
+          ).textContent = `Hello, ${user.first_name} ${user.last_name}`;
         } else {
-            document.getElementById('userInfo').textContent = 'Telegram Web App SDK not available.';
+          document.getElementById("userInfo").textContent =
+            "User info not available.";
         }
+
+        // Display the referrerUuid in the new paragraph
+
+        document.getElementById(
+          "referrerUuid"
+        ).textContent = `Referrer UUID: ${referrerUuid}`;
+
+        tg.ready();
+      } else {
+        document.getElementById("userInfo").textContent =
+          "Telegram Web App SDK not available.";
+      }
     </script>
-</body>
+  </body>
 </html>
