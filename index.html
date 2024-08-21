@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Telegram Web App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Telegram Web App Example</h1>
     <div id="content"></div>
 
     <script>
-        // Initialize the Telegram Web App
-        Telegram.WebApp.ready();
+      // Initialize the Telegram Web App
+      Telegram.WebApp.ready();
 
-        // Get the full URL of the page
-        const urlParams = new URLSearchParams(window.location.search);
+      // Check if initData contains any custom data
+      const initData = Telegram.WebApp.initData;
+      const initDataUnsafe = Telegram.WebApp.initDataUnsafe;
 
-        // Extract the 'startapp' parameter from the URL
-        const startappValue = urlParams.get('startapp');
+      // Try to get the `startapp` parameter from initData
+      // Note: initData does not directly contain the URL params; it's a JSON string
 
-        // Display the parameter value on the page (for demonstration)
-        document.getElementById('content').innerText = `Startapp Parameter: ${startappValue}`;
+      // If you've embedded data via initData, you'd parse it here
+      // Example: passing custom data within initData through the bot (not always necessary)
 
-        // You can now use the 'startappValue' in your app logic
-        if (startappValue === 'hello') {
-            // Do something specific if the startapp value is 'hello'
-            console.log("Startapp value is 'hello'");
-        }
+      // If your URL parameters aren't in initData, you'll need to manually parse them
+      const urlParams = new URLSearchParams(window.location.search);
+      const startappValue = urlParams.get("startapp") || "default_value";
+
+      console.log("Startapp Parameter:", startappValue);
+
+      // Display the parameter value on the page (for demonstration)
+      document.getElementById(
+        "content"
+      ).innerText = `Startapp Parameter: ${startappValue}`;
+
+      // Use the parameter value as needed
     </script>
-</body>
+  </body>
 </html>
