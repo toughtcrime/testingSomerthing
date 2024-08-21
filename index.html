@@ -8,34 +8,14 @@
   </head>
   <body>
     <h1>Telegram Web App Example</h1>
-    <div id="content"></div>
+    <div id="start-app-value"></div>
 
     <script>
-      // Initialize the Telegram Web App
-      Telegram.WebApp.ready();
+      const initData = window.Telegram.WebApp.initData;
+      const startAppValue = initData.startApp;
 
-      // Check if initData contains any custom data
-      const initData = Telegram.WebApp.initData;
-      const initDataUnsafe = Telegram.WebApp.initDataUnsafe;
-
-      // Try to get the `startapp` parameter from initData
-      // Note: initData does not directly contain the URL params; it's a JSON string
-
-      // If you've embedded data via initData, you'd parse it here
-      // Example: passing custom data within initData through the bot (not always necessary)
-
-      // If your URL parameters aren't in initData, you'll need to manually parse them
-      const urlParams = new URLSearchParams(window.location.search);
-      const startappValue = urlParams.get("startapp") || "default_value";
-
-      console.log("Startapp Parameter:", startappValue);
-
-      // Display the parameter value on the page (for demonstration)
-      document.getElementById(
-        "content"
-      ).innerText = `Startapp Parameter: ${startappValue}`;
-
-      // Use the parameter value as needed
+      console.log(startAppValue); // prints the value of the startApp parameter
+      document.getElementById("start-app-value").innerHTML = startAppValue;
     </script>
   </body>
 </html>
