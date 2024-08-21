@@ -30,18 +30,25 @@
 
         tg.expand(); // Expand the app to full height
 
-        tg.ready().then(() => {
-          const startAppData = tg.initDataUnsafe.startAppData; // Get the startAppData
+        tg.ready()
+          .then(() => {
+            return tg.getInitData();
+          })
+          .then((initData) => {
+            const startAppData = initData.startAppData; // Get the startAppData
 
-          if (startAppData) {
-            document.getElementById(
-              "referrerUuid"
-            ).textContent = `Referrer UUID: ${startAppData}`;
-          } else {
-            document.getElementById("referrerUuid").textContent =
-              "No referrer UUID provided.";
-          }
-        });
+            if (startAppData) {
+              document.getElementById(
+                "referrerUuid"
+              ).textContent = `Referrer UUID: ${startAppData}`;
+            } else {
+              document.getElementById("referrerUuid").textContent =
+                "No referrer UUID provided.";
+            }
+          })
+          .catch((error) => {
+            console.error("Error initializing Telegram Web App:", error);
+          });
       } else {
         document.getElementById("referrerUuid").textContent =
           "Telegram Web App SDK not available.";
