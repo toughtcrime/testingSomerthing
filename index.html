@@ -4,47 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Telegram Web App</title>
+
+    <!-- Include the Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
     <style>
       body {
-        background-color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+        background-color: #ffffff; /* Add this line to set the background color to white */
       }
     </style>
   </head>
   <body>
-    <h1>Telegram Web App Example</h1>
-    <div id="content"></div>
+    <h1>Telegram Web App</h1>
+    <p id="userInfo">UUID: empty</p>
+    <p id="referrerUuid"></p>
 
     <script>
-      // Initialize the Telegram Web App
-      Telegram.WebApp.ready();
+      // ...
 
-      // Extract the `initDataUnsafe` which is an object representation of `initData`
-      const initDataUnsafe = Telegram.WebApp.initDataUnsafe;
+      if (window.Telegram.WebApp) {
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Expand the app to full height
 
-      // Try to extract custom parameters from the `initDataUnsafe`
-      const startapp = initDataUnsafe.query_id || null;
-      const referrerUuid = initDataUnsafe.referrerUuid || null;
+        const user = tg.initDataUnsafe.user;
+        const query = tg.initDataUnsafe.query; // Get the original query string
+        const referrerUuid = new URLSearchParams(query).get("referrerUuid"); // Extract the referrerUuid from the query string
 
-      // Alternatively, if you encoded these parameters in the URL initially:
-      const urlParams = new URLSearchParams(initDataUnsafe.start_param);
+        if (user) {
+          document.getElementById(
+            "userInfo"
+          ).textContent = `Hello, ${user.first_name} ${user.last_name}`;
+        } else {
+          document.getElementById("userInfo").textContent =
+            "User info not available.";
+        }
 
-      // Now, you can check if these parameters exist
-      if (referrerUuid) {
-        console.log("Referrer UUID:", referrerUuid);
-        // Use the referrerUuid in your app logic
+        // Display the referrerUuid in the new paragraph
         document.getElementById(
-          "content"
-        ).innerText = `Referrer UUID: ${referrerUuid}`;
-      } else if (startapp) {
-        console.log("Startapp Parameter:", startapp);
-        document.getElementById(
-          "content"
-        ).innerText = `Startapp Parameter: ${startapp}`;
+          "referrerUuid"
+        ).textContent = `Referrer UUID: ${referrerUuid}`;
+
+        tg.ready();
       } else {
-        console.log("No relevant parameters found");
-        document.getElementById("content").innerText =
-          "No relevant parameters found";
+        document.getElementById("userInfo").textContent =
+          "Telegram Web App SDK not available.";
       }
     </script>
   </body>
