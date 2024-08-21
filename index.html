@@ -27,29 +27,23 @@
 
       if (window.Telegram.WebApp) {
         const tg = window.Telegram.WebApp;
+
         tg.expand(); // Expand the app to full height
 
         tg.ready().then(() => {
-          const user = tg.initDataUnsafe.user;
-          const startParam = tg.initDataUnsafe.startParam; // Get the start parameter
-          const referrerUuid = startParam.split("/").pop(); // Extract the referrerUuid from the start parameter
+          const startAppData = tg.initDataUnsafe.startAppData; // Get the startAppData
 
-          if (user) {
+          if (startAppData) {
             document.getElementById(
-              "userInfo"
-            ).textContent = `Hello, ${user.first_name} ${user.last_name}`;
+              "referrerUuid"
+            ).textContent = `Referrer UUID: ${startAppData}`;
           } else {
-            document.getElementById("userInfo").textContent =
-              "User info not available.";
+            document.getElementById("referrerUuid").textContent =
+              "No referrer UUID provided.";
           }
-
-          // Display the referrerUuid in the new paragraph
-          document.getElementById(
-            "referrerUuid"
-          ).textContent = `Referrer UUID: ${referrerUuid}`;
         });
       } else {
-        document.getElementById("userInfo").textContent =
+        document.getElementById("referrerUuid").textContent =
           "Telegram Web App SDK not available.";
       }
     </script>
