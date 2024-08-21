@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App</title>
+
+    <!-- Include the Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        #incomingRequests {
+            margin-top: 30px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Telegram Web App</h1>
+    <p id="userInfo">Loading user info...</p>
+    <button id="sendRequestBtn" disabled>Send Request</button>
+
+    <div id="incomingRequests">
+        <h2>Incoming Requests:</h2>
+        <ul id="requestsList"></ul>
+    </div>
+
+    <script>
+        let requestsList = document.getElementById('requestsList');
+
+        if (window.Telegram.WebApp) {
+            const tg = window.Telegram.WebApp;
+            tg.expand(); // Expand the app to full height
+
+            const user = tg.initDataUnsafe.user;
+            if (user) {
+                document.getElementById('userInfo').textContent = `Hello, ${user.first_name} ${user.last_name}`;
+                document.getElementById('sendRequestBtn').disabled = false;
+            } else {
+                document.getElementById('userInfo').textContent = 'User info not available.';
+            }
+
+            document.getElementById('sendRequestBtn').addEventListener('click', function() {
+                const requestData = {
+                    user_id: user.id,
+                    first_name: user.first_name,
+                    last_name: user.last_name
+                };
+
+                fetch('https://your-server-url/handle-telegram-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                }).then(response => response.json())
+                .then(data => {
+                    alert('Request sent successfully: ' + JSON.stringify(data));
+                }).catch(error => {
+                    alert('Error sending request: ' + error);
+                });
+            });
+
+            tg.ready();
+        } else {
+            document.getElementById('userInfo').textContent = 'Telegram Web App SDK not available.';
+        }
+    </script>
+</body>
+</html>
