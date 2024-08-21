@@ -32,9 +32,11 @@
 
         const user = tg.initDataUnsafe.user;
 
-        const startParam = tg.initDataUnsafe.startParam; // Get the original start parameter
+        const urlParams = new URLSearchParams(window.location.search); // Get the URL parameters
 
-        const referrerUuid = startParam; // The startParam should contain the referrerUuid
+        const referrerUuid = urlParams.get("referrerUuid"); // Extract the referrerUuid from the URL parameters
+
+        tg.setQueryParams({ referrerUuid }); // Set the referrerUuid as a query parameter
 
         if (user) {
           document.getElementById(
