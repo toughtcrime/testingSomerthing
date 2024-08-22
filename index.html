@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Telegram Web App</title>
   <style>
     body {
@@ -31,8 +32,10 @@
     .data-value {
       font-size: 18px;
       margin-bottom: 20px;
+      word-wrap: break-word;
     }
   </style>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
   <div class="container">
@@ -54,23 +57,28 @@
     const telegramWebApp = window.Telegram.WebApp;
 
     // Check if the Telegram Web App API is available
-    if (window.Telegram && window.Telegram.WebApp) {
+    if (telegramWebApp) {
       // Get the startParam
-      const startParam = telegramWebApp.initData.startParam;
-      document.getElementById("start-param").innerHTML = startParam;
+      const startParam = telegramWebApp.startParam || "No start param provided";
+      document.getElementById("start-param").textContent = startParam;
 
       // Get the initData
-      const initData = telegramWebApp.initData;
+      const initDataUnsafe = telegramWebApp.initDataUnsafe;
+
+      // Construct the HTML content for initData
       const initDataHtml = `
-        <p>Username: ${initData.username}</p>
-        <p>First Name: ${initData.firstName}</p>
-        <p>Last Name: ${initData.lastName}</p>
+        <p>Username: ${initDataUnsafe.user?.username || "N/A"}</p>
+        <p>First Name: ${initDataUnsafe.user?.first_name || "N/A"}</p>
+        <p>Last Name: ${initDataUnsafe.user?.last_name || "N/A"}</p>
       `;
       document.getElementById("init-data").innerHTML = initDataHtml;
+
+      // Log the initData object for debugging purposes
+      console.log(initDataUnsafe);
     } else {
       console.log("Telegram Web App API is not available");
-      document.getElementById("start-param").innerHTML = "Telegram Web App API is not available";
-      document.getElementById("init-data").innerHTML = "Telegram Web App API is not available";
+      document.getElementById("start-param").textContent = "Telegram Web App API is not available";
+      document.getElementById("init-data").textContent = "Telegram Web App API is not available";
     }
   </script>
 </body>
