@@ -1,60 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<html>
+<head>
+  <title>Telegram Web App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+    .container {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .data-container {
+      margin-bottom: 20px;
+    }
+    .data-label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .data-value {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Telegram Web App</h1>
+    </div>
+    <div class="data-container">
+      <div class="data-label">Start Param:</div>
+      <div class="data-value" id="start-param"></div>
+    </div>
+    <div class="data-container">
+      <div class="data-label">Init Data:</div>
+      <div class="data-value" id="init-data"></div>
+    </div>
+  </div>
 
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding: 20px;
-        background-color: #ffffff;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Telegram Web App</h1>
-    <p id="userInfo"></p>
-    <p id="referrerUuid">UUID: empty</p>
-    <p id="startapp">StartApp: empty</p>
+  <script>
+    // Get the Telegram Web App object
+    const telegramWebApp = window.Telegram.WebApp;
 
-    <script>
-      if (window.Telegram.WebApp) {
-        const tg = window.Telegram.WebApp;
-        tg.expand(); // Expand the app to full height
+    // Check if the Telegram Web App API is available
+    if (window.Telegram && window.Telegram.WebApp) {
+      // Get the startParam
+      const startParam = telegramWebApp.initData.startParam;
+      document.getElementById("start-param").innerHTML = startParam;
 
-        const user = tg.initData;
-        const query = tg.initData.query; // Get the original query string
-
-        // Custom 'startapp' parameter handling via tgWebAppStartParam
-        const startApp = tg.initData.startParam;
-
-        // Display user's first and last name
-        if (user) {
-          document.getElementById("userInfo").textContent =
-            `User: ${user.first_name} ${user.last_name || ''}`;
-        } else {
-          document.getElementById("userInfo").textContent =
-            "User information not available.";
-        }
-
-        // Display the referrerUuid
-        document.getElementById(
-          "referrerUuid"
-        ).textContent = `Referrer UUID: ${query}`;
-
-        // Display the startapp parameter
-        document.getElementById(
-          "startapp"
-        ).textContent = `StartApp: ${startApp || 'Not provided'}`;
-
-        tg.ready();
-      } else {
-        document.getElementById("userInfo").textContent =
-          "Telegram Web App SDK not available.";
-      }
-    </script>
-  </body>
+      // Get the initData
+      const initData = telegramWebApp.initData;
+      const initDataHtml = `
+        <p>Username: ${initData.username}</p>
+        <p>First Name: ${initData.firstName}</p>
+        <p>Last Name: ${initData.lastName}</p>
+      `;
+      document.getElementById("init-data").innerHTML = initDataHtml;
+    } else {
+      console.log("Telegram Web App API is not available");
+      document.getElementById("start-param").innerHTML = "Telegram Web App API is not available";
+      document.getElementById("init-data").innerHTML = "Telegram Web App API is not available";
+    }
+  </script>
+</body>
 </html>
