@@ -56,12 +56,18 @@
     // Get the Telegram Web App object
     const telegramWebApp = window.Telegram.WebApp;
 
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Get the startapp parameter
+    const startAppParam = getUrlParameter('startapp') || "No startapp param provided";
+    document.getElementById("start-param").textContent = startAppParam;
+
     // Check if the Telegram Web App API is available
     if (telegramWebApp) {
-      // Get the startParam
-      const startParam = telegramWebApp.startParam || "No start param provided";
-      document.getElementById("start-param").textContent = startParam;
-
       // Get the initData
       const initDataUnsafe = telegramWebApp.initDataUnsafe;
 
