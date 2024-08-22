@@ -25,11 +25,11 @@
         const tg = window.Telegram.WebApp;
         tg.expand(); // Expand the app to full height
 
-        const user = tg.initData.user;
+        const user = tg.initData;
         const query = tg.initData.query; // Get the original query string
 
         // Custom 'startapp' parameter handling via tgWebAppStartParam
-        const startApp = tg.initData.start_param;
+        const startApp = tg.initData.startParam;
 
         // Display user's first and last name
         if (user) {
