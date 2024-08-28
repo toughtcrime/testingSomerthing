@@ -50,6 +50,10 @@
       <div class="data-label">Init Data:</div>
       <div class="data-value" id="init-data"></div>
     </div>
+
+    <div class="data-container">
+        <p id="initDataRawDisplay"></p>
+    </div>
   </div>
 
   <script>
@@ -64,7 +68,10 @@
       console.log('initDataRaw: ', window.Telegram.WebApp.initData);
       // Get the initData
       const initDataUnsafe = telegramWebApp.initDataUnsafe;
-
+      
+      const initDataRawElement = document.getElementById('initDataRawDisplay');
+      initDataRawElement.innerText = window.Telegram.WebApp.initData;
+      
       // Construct the HTML content for initData
       const initDataHtml = `
         <p>Username: ${initDataUnsafe.user?.username || "N/A"}</p>
