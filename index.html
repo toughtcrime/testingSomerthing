@@ -61,7 +61,7 @@
       // Get the startParam from initDataUnsafe
       const startParam = telegramWebApp.initDataUnsafe?.start_param || "No start_param provided";
       document.getElementById("start-param").textContent = startParam;
-
+      console.log('initDataRaw: ', window.Telegram.WebApp.initData);
       // Get the initData
       const initDataUnsafe = telegramWebApp.initDataUnsafe;
 
