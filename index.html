@@ -1,93 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telegram Web App</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-    }
-    .container {
-      max-width: 400px;
-      margin: 40px auto;
-      padding: 20px;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      word-wrap: break-word;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .data-container {
-      margin-bottom: 20px;
-    }
-    .data-label {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .data-value {
-      font-size: 18px;
-      margin-bottom: 20px;
-      word-wrap: break-word;
-    }
-  </style>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>Telegram Web App</h1>
-    </div>
-    <div class="data-container">
-      <div class="data-label">Start Param:</div>
-      <div class="data-value" id="start-param"></div>
-    </div>
-    <div class="data-container">
-      <div class="data-label">Init Data:</div>
-      <div class="data-value" id="init-data"></div>
-    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telegram Web App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      .container {
+        max-width: 400px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        word-wrap: break-word;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .data-container {
+        margin-bottom: 20px;
+      }
+      .data-label {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .data-value {
+        font-size: 18px;
+        margin-bottom: 20px;
+        word-wrap: break-word;
+      }
 
-    <div class="data-container">
+      .button-container {
+        text-align: center;
+      }
+
+      .simple-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #000000;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 3px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .simple-button:hover {
+        background-color: #333333;
+      }
+
+      .simple-button:active {
+        background-color: #000000;
+      }
+
+      .link-button:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+        z-index: 0;
+        border-radius: 8px;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+      }
+    </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Telegram Web App</h1>
+      </div>
+      <div class="data-container">
+        <div class="data-label">Start Param:</div>
+        <div class="data-value" id="start-param"></div>
+      </div>
+      <div class="data-container">
+        <div class="data-label">Init Data:</div>
+        <div class="data-value" id="init-data"></div>
+      </div>
+
+      <div class="data-container">
         <p id="initDataRawDisplay"></p>
+      </div>
+
+      <div class="button-container">
+        <a href="tg://msg_url?url=https://t.me/testingSomerthing_bot/forget?startapp=ebb65da9-cff5-4475-8db2-54be80566b34&text=ComeWithUS!" class="simple-button">Forward Message</a>
+      </div>
     </div>
-  </div>
 
-  <script>
-    // Get the Telegram Web App object
-    const telegramWebApp = window.Telegram.WebApp;
+    <script>
+      // Get the Telegram Web App object
+      const telegramWebApp = window.Telegram.WebApp;
 
-    // Check if the Telegram Web App API is available
-    if (telegramWebApp) {
-      // Get the startParam from initDataUnsafe
-      const startParam = telegramWebApp.initDataUnsafe?.start_param || "No start_param provided";
-      document.getElementById("start-param").textContent = startParam;
-      console.log('initDataRaw: ', window.Telegram.WebApp.initData);
-      // Get the initData
-      const initDataUnsafe = telegramWebApp.initDataUnsafe;
-      
-      const initDataRawElement = document.getElementById('initDataRawDisplay');
-      initDataRawElement.innerText = window.Telegram.WebApp.initData;
-      
-      // Construct the HTML content for initData
-      const initDataHtml = `
+      // Check if the Telegram Web App API is available
+      if (telegramWebApp) {
+        // Get the startParam from initDataUnsafe
+        const startParam =
+          telegramWebApp.initDataUnsafe?.start_param ||
+          "No start_param provided";
+        document.getElementById("start-param").textContent = startParam;
+        console.log("initDataRaw: ", window.Telegram.WebApp.initData);
+        // Get the initData
+        const initDataUnsafe = telegramWebApp.initDataUnsafe;
+
+        const initDataRawElement =
+          document.getElementById("initDataRawDisplay");
+        initDataRawElement.innerText = window.Telegram.WebApp.initData;
+
+        // Construct the HTML content for initData
+        const initDataHtml = `
         <p>Username: ${initDataUnsafe.user?.username || "N/A"}</p>
         <p>First Name: ${initDataUnsafe.user?.first_name || "N/A"}</p>
         <p>Last Name: ${initDataUnsafe.user?.last_name || "N/A"}</p>
       `;
-      document.getElementById("init-data").innerHTML = initDataHtml;
+        document.getElementById("init-data").innerHTML = initDataHtml;
 
-      // Log the initData object for debugging purposes
-      console.log(initDataUnsafe);
-    } else {
-      console.log("Telegram Web App API is not available");
-      document.getElementById("start-param").textContent = "Telegram Web App API is not available";
-      document.getElementById("init-data").textContent = "Telegram Web App API is not available";
-    }
-  </script>
-</body>
+        // Log the initData object for debugging purposes
+        console.log(initDataUnsafe);
+      } else {
+        console.log("Telegram Web App API is not available");
+        document.getElementById("start-param").textContent =
+          "Telegram Web App API is not available";
+        document.getElementById("init-data").textContent =
+          "Telegram Web App API is not available";
+      }
+    </script>
+  </body>
 </html>
