@@ -85,11 +85,6 @@
       <div class="header">
         <h1>Telegram Web App</h1>
       </div>
-<<<<<<< HEAD
-
-      
-=======
->>>>>>> parent of 9e06a7f (DAVAI SUKA)
       <div class="data-container">
         <div class="data-label">Start Param:</div>
         <div class="data-value" id="start-param"></div>
@@ -130,17 +125,8 @@
 
         const initDataRawElement =
           document.getElementById("initDataRawDisplay");
-<<<<<<< HEAD
-
-        initDataRawElement.innerText = tg.initData;
-        const imgURL = user.photo_url;
-        const img = document.createElement('img');
-        img.src = imgURL;
-        img.alt = 'No image provided';
-=======
         initDataRawElement.innerText = window.Telegram.WebApp.initData;
 
->>>>>>> parent of 9e06a7f (DAVAI SUKA)
         // Construct the HTML content for initData
         const initDataHtml = `
         <p>Username: ${window.Telegram.WebApp.initDataUnsafe.username || "N/A"}</p>
