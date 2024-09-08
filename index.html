@@ -100,6 +100,7 @@
 
         <div class="button-container">
           <a href="https://t.me/share/url?url=https%3A%2F%2Ft.me%2FtestingSomerthing_bot%2Fforget%3Fstartapp%3Debb65da9-cff5-4475-8db2-54be80566b34&text=Join%20the%20battle%20in%20GladiaTON" class="simple-button">Forward Message</a>
+          <p id="imgURL"></p>
         </div>
 
         
@@ -116,23 +117,19 @@
           telegramWebApp.initDataUnsafe?.start_param ||
           "No start_param provided";
         document.getElementById("start-param").textContent = startParam;
-        console.log("initDataRaw: ", window.Telegram.WebApp.initData);
+        console.log("initDataRaw: ", telegramWebApp.initData);
         // Get the initData
-        const user = telegramWebApp.initDataUnsafe.user;
+        const initData = new URLSearchParams(telegramWebApp.initData);
+
 
         const initDataRawElement =
           document.getElementById("initDataRawDisplay");
-        initDataRawElement.innerText = window.Telegram.WebApp.initData;
-        if (user.photo_url) {
-        // Display the user's profile photo
+
+        initDataRawElement.innerText = telegramWebApp.initData;
         const img = document.createElement('img');
-        img.src = user.photo_url;
+        const imgURL = initData.get('photo_url');
+        img.src = imgURL;
         img.alt = 'No image provided';
-      } else {
-        userInfoDiv.innerHTML += '<p>No profile photo available.</p>';
-      }
-        const profileImage = document.getElementById('profile_image');
-        profileImage.src = `${initDataUnsafe.user?.photo_url}`;
         // Construct the HTML content for initData
         const initDataHtml = `
         <p>Username: ${user?.username || "N/A"}</p>
@@ -140,7 +137,7 @@
         <p>Last Name: ${user?.last_name || "N/A"}</p>
       `;
         document.getElementById("init-data").innerHTML = initDataHtml;
-
+        document.getElementById("imgURL").innerHTML = imgURL;
         // Log the initData object for debugging purposes
         console.log(initDataUnsafe);
       } else {
