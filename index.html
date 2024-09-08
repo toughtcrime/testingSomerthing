@@ -100,7 +100,7 @@
         <p id="initDataRawDisplay"></p>
       </div>
 
-        <div class="button-container">
+        <div class="button-container">/
           <a href="https://t.me/share/url?url=https%3A%2F%2Ft.me%2FtestingSomerthing_bot%2Fforget%3Fstartapp%3Debb65da9-cff5-4475-8db2-54be80566b34&text=Join%20the%20battle%20in%20GladiaTON" class="simple-button">Forward Message</a>
           <p id="imgURL"></p>
         </div>
@@ -110,26 +110,26 @@
 
     <script>
       // Get the Telegram Web App object
-      const telegramWebApp = window.Telegram.WebApp;
-      const user = telegramWebApp.user;
+      const tg = window.Telegram.WebApp;
+      const user = tg.user.initDataUnsafe;
       // Check if the Telegram Web App API is available
-      if (telegramWebApp) {
+      if (tg) {
         // Get the startParam from initDataUnsafe
         const startParam =
-          telegramWebApp.initDataUnsafe?.start_param ||
+          tg.initDataUnsafe?.start_param ||
           "No start_param provided";
         document.getElementById("start-param").textContent = startParam;
-        console.log("initDataRaw: ", telegramWebApp.initData);
+        console.log("initDataRaw: ", tg.initData);
         // Get the initData
-        const initData = new URLSearchParams(telegramWebApp.initData);
+        const initData = new URLSearchParams(tg.initData);
 
 
         const initDataRawElement =
           document.getElementById("initDataRawDisplay");
 
-        initDataRawElement.innerText = telegramWebApp.initData;
-        const img = document.createElement('img');
+        initDataRawElement.innerText = tg.initData;
         const imgURL = user.photo_url;
+        const img = document.createElement('img');
         img.src = imgURL;
         img.alt = 'No image provided';
         // Construct the HTML content for initData
@@ -140,8 +140,7 @@
       `;
         document.getElementById("init-data").innerHTML = initDataHtml;
         document.getElementById("imgURL").innerHTML = imgURL;
-        // Log the initData object for debugging purposes
-        console.log(initDataUnsafe);
+
       } else {
         console.log("Telegram Web App API is not available");
         document.getElementById("start-param").textContent =
