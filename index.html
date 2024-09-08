@@ -111,7 +111,7 @@
     <script>
       // Get the Telegram Web App object
       const telegramWebApp = window.Telegram.WebApp;
-
+      const user = telegramWebApp.user;
       // Check if the Telegram Web App API is available
       if (telegramWebApp) {
         // Get the startParam from initDataUnsafe
@@ -129,7 +129,7 @@
 
         initDataRawElement.innerText = telegramWebApp.initData;
         const img = document.createElement('img');
-        const imgURL = initData.get('photo_url');
+        const imgURL = user.photo_url;
         img.src = imgURL;
         img.alt = 'No image provided';
         // Construct the HTML content for initData
