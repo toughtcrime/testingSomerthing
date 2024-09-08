@@ -81,6 +81,7 @@
       <div class="header">
         <h1>Telegram Web App</h1>
       </div>
+      <img src="" alt="User Profile Image" id="profile_image">
       <div class="data-container">
         <div class="data-label">Start Param:</div>
         <div class="data-value" id="start-param"></div>
@@ -119,7 +120,8 @@
         const initDataRawElement =
           document.getElementById("initDataRawDisplay");
         initDataRawElement.innerText = window.Telegram.WebApp.initData;
-
+        const profileImage = document.getElementById('profile_image');
+        profileImage.src = `${initDataUnsafe.user?.photo_url}`;
         // Construct the HTML content for initData
         const initDataHtml = `
         <p>Username: ${initDataUnsafe.user?.username || "N/A"}</p>
