@@ -81,7 +81,7 @@
       <div class="header">
         <h1>Telegram Web App</h1>
       </div>
-      <img src="" alt="User Profile Image" id="profile_image">
+      <img src="" alt="User Profile Image" id="img">
       <div class="data-container">
         <div class="data-label">Start Param:</div>
         <div class="data-value" id="start-param"></div>
@@ -115,18 +115,26 @@
         document.getElementById("start-param").textContent = startParam;
         console.log("initDataRaw: ", window.Telegram.WebApp.initData);
         // Get the initData
-        const initDataUnsafe = telegramWebApp.initDataUnsafe;
+        const user = telegramWebApp.initDataUnsafe.user;
 
         const initDataRawElement =
           document.getElementById("initDataRawDisplay");
         initDataRawElement.innerText = window.Telegram.WebApp.initData;
+        if (user.photo_url) {
+        // Display the user's profile photo
+        const img = document.createElement('img');
+        img.src = user.photo_url;
+        userInfoDiv.appendChild(img);
+      } else {
+        userInfoDiv.innerHTML += '<p>No profile photo available.</p>';
+      }
         const profileImage = document.getElementById('profile_image');
         profileImage.src = `${initDataUnsafe.user?.photo_url}`;
         // Construct the HTML content for initData
         const initDataHtml = `
-        <p>Username: ${initDataUnsafe.user?.username || "N/A"}</p>
-        <p>First Name: ${initDataUnsafe.user?.first_name || "N/A"}</p>
-        <p>Last Name: ${initDataUnsafe.user?.last_name || "N/A"}</p>
+        <p>Username: ${user?.username || "N/A"}</p>
+        <p>First Name: ${user?.first_name || "N/A"}</p>
+        <p>Last Name: ${user?.last_name || "N/A"}</p>
       `;
         document.getElementById("init-data").innerHTML = initDataHtml;
 
