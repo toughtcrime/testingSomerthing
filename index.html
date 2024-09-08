@@ -81,7 +81,7 @@
       <div class="header">
         <h1>Telegram Web App</h1>
       </div>
-      <img src="" alt="User Profile Image" id="img">
+      <img src="https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGYtaWNvbjQtamlyMjA2Mi1wb3ItbC5qcGc.jpg" alt="User Profile Image" id="img">
       <div class="data-container">
         <div class="data-label">Start Param:</div>
         <div class="data-value" id="start-param"></div>
@@ -124,7 +124,7 @@
         // Display the user's profile photo
         const img = document.createElement('img');
         img.src = user.photo_url;
-        userInfoDiv.appendChild(img);
+        img.alt = 'No image provided';
       } else {
         userInfoDiv.innerHTML += '<p>No profile photo available.</p>';
       }
