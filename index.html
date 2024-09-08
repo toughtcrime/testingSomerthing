@@ -104,8 +104,9 @@
           <a href="https://t.me/share/url?url=https%3A%2F%2Ft.me%2FtestingSomerthing_bot%2Fforget%3Fstartapp%3Debb65da9-cff5-4475-8db2-54be80566b34&text=Join%20the%20battle%20in%20GladiaTON" class="simple-button">Forward Message</a>
           <p id="imgURL"></p>
         </div>
-
+        <div></div>
         <img src="https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcGYtaWNvbjQtamlyMjA2Mi1wb3ItbC5qcGc.jpg" alt="User Profile Image" id="img">
+        </div>
       </div>
 
     <script>
@@ -134,9 +135,9 @@
         img.alt = 'No image provided';
         // Construct the HTML content for initData
         const initDataHtml = `
-        <p>Username: ${user?.username || "N/A"}</p>
-        <p>First Name: ${user?.first_name || "N/A"}</p>
-        <p>Last Name: ${user?.last_name || "N/A"}</p>
+        <p>Username: ${window.Telegram.WebApp.initDataUnsafe.username || "N/A"}</p>
+        <p>First Name: ${window.Telegram.WebApp.initDataUnsafe.firs_name || "N/A"}</p>
+        <p>Last Name: ${window.Telegram.WebApp.initDataUnsafe.last_name || "N/A"}</p>
       `;
         document.getElementById("init-data").innerHTML = initDataHtml;
         document.getElementById("imgURL").innerHTML = imgURL;
